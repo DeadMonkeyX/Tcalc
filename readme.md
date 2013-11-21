@@ -1,5 +1,4 @@
 #Dm0nk's Tcalc 
-===================
 
 Tcalc is a CLI application, that will run on Windows and Linux (not testet on mac yet).
 
