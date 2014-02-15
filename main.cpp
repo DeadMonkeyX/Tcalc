@@ -7,8 +7,7 @@
 
 using namespace std;
 
-
-//Add color support
+//Add color support works for linux and OSX but should not work on windows.
 #define RESET   "\033[0m"
 #define BLACK   "\033[30m"      /* Black */
 #define RED     "\033[31m"      /* Red */
@@ -27,10 +26,30 @@ using namespace std;
 #define BOLDCYAN    "\033[1m\033[36m"      /* Bold Cyan */
 #define BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
 
-
-void usage(char *argv[])
+void logo()
 {
-    printf("\n===DM0nk's Tcalc 3.0 ===\n\nUsage: %s <Speed in Mbit> <Size in GB>\n", argv[0]);
+    //Print application name  in ascii with the color of Cyan
+    cout << BOLDCYAN;
+    cout << " _____          _        _____  ___  " << endl;
+    cout << "/__   \\___ __ _| | ___  |___ / / _ \\ " << endl;
+    cout << "  / /\\/ __/ _` | |/ __|   |_ \\| | | |" << endl;
+    cout << " / / | (_| (_| | | (__   ___) | |_| |" << endl;
+    cout << " \\/   \\___\\__,_|_|\\___| |____(_)___/ " << endl;
+    cout << "====================================" << RESET << endl;
+
+}
+void usage(char *argv[], int argc)
+{
+    logo();
+
+    if(argc != 3)
+    {
+        cout << BOLDRED << "E: Missing Arguments" << RESET << "\n" << endl;
+    }
+
+    cout << "Usage: " << argv[0] << " <Speed in Mbit> <Size in GB>\n" << endl;
+       
+   // printf("\n===DM0nk's Tcalc 3.0 ===\n\nUsage: %s <Speed in Mbit> <Size in GB>\n", argv[0]);
     exit(1);
 
 }
@@ -41,7 +60,7 @@ int main (int argc, char *argv[])
     //Lets check if the argv count if 3 else show usage
     if(argc != 3)
     {
-        usage(argv);
+        usage(argv, argc);
     }
 
 
@@ -85,9 +104,14 @@ int main (int argc, char *argv[])
     }
 
 
-    //Lets write the Result
+    //Now lets print the logo and the result
+    logo();
+
     cout.precision(3);
-    cout << "\n===DM0nk's Tcalc 3.0 ===\n\n" << "Size: " << t << transferFormat << "Speed: " << s << " MB/s\n\n" << "ETA: ";
+
+
+
+    cout << BOLDWHITE <<  "Size: " << RESET << t << transferFormat << BOLDWHITE << "Speed: " << RESET << s << " MB/s\n\n" << BOLDWHITE << "ETA: " << RESET;
     if(years != 0)
     {
     cout << years << " Years - ";
