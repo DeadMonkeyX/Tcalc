@@ -26,20 +26,26 @@ using namespace std;
 #define BOLDMAGENTA "\033[1m\033[35m"      /* Bold Magenta */
 #define BOLDCYAN    "\033[1m\033[36m"      /* Bold Cyan */
 #define BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
-
 #endif
 
 
 void logo()
 {
     //Print application name  in ascii with the color of Cyan
+	#if defined(__APPLE__) || defined(__LINUX__)
     cout << BOLDCYAN;
+	#endif
+	
     cout << " _____          _        _____  ___  " << endl;
     cout << "/__   \\___ __ _| | ___  |___ / / _ \\ " << endl;
     cout << "  / /\\/ __/ _` | |/ __|   |_ \\| | | |" << endl;
     cout << " / / | (_| (_| | | (__   ___) | |_| |" << endl;
     cout << " \\/   \\___\\__,_|_|\\___| |____(_)___/ " << endl;
-    cout << "====================================" << RESET << endl;
+	cout << "====================================" << endl;
+
+	#if defined(__APPLE__) || defined(__LINUX__)
+	cout << RESET;
+	#endif
 
 }
 void usage(char *argv[], int argc)
@@ -48,10 +54,20 @@ void usage(char *argv[], int argc)
 
     if(argc != 3)
     {
-        cout << BOLDRED << "E: Missing Arguments" << RESET << "\n" << endl;
-    }
+		#if defined(__APPLE__) || defined(__LINUX__)
+			cout << BOLDRED;
+ 		#endif
 
-    cout << "Usage: " << argv[0] << " <Speed in Mbit> <Size in GB>\n" << endl;
+		cout << "E: Missing Arguments" << 
+		#if defined(__APPLE__) || defined(__LINUX__)
+			cout << RESET;
+		#endif
+		
+		cout << "\n" << endl;
+    
+	}
+
+    cout << "Usage: " << argv[0] << " <Speed in Mbit> <Size in GB> [overhead in procent]\n " << endl;
        
    // printf("\n===DM0nk's Tcalc 3.0 ===\n\nUsage: %s <Speed in Mbit> <Size in GB>\n", argv[0]);
     exit(1);
@@ -114,9 +130,15 @@ int main (int argc, char *argv[])
     cout.precision(3);
 
 
-
+	#if defined(__APPLE__) || defined(__LINUX__)
     cout << BOLDWHITE <<  "Size: " << RESET << t << transferFormat << BOLDWHITE << "Speed: " << RESET << s << " MB/s\n\n" << BOLDWHITE << "ETA: " << RESET;
-    if(years != 0)
+    #endif
+	
+	#if defined(_WIN32)
+	cout << "Size: " << t << transferFormat << "Speed: " << s << " MB/s\n\n" << "ETA: ";
+	#endif
+	
+	if(years != 0)
     {
     cout << years << " Years - ";
     }
