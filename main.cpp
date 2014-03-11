@@ -52,13 +52,13 @@ void usage(char *argv[], int argc)
 {
     logo();
 
-    if(argc != 3)
+    if(argc < 3)
     {
 		#if defined(__APPLE__) || defined(__LINUX__)
 			cout << BOLDRED;
  		#endif
 
-		cout << "E: Missing Arguments" << 
+			cout << "E: Missing Arguments";
 		#if defined(__APPLE__) || defined(__LINUX__)
 			cout << RESET;
 		#endif
@@ -78,25 +78,38 @@ void usage(char *argv[], int argc)
 int main (int argc, char *argv[])
 {
     //Lets check if the argv count if 3 else show usage
-    if(argc != 3)
+    if(argc < 3)
     {
         usage(argv, argc);
     }
 
 
     //set and get values from argv and convert if needed.
-    double s, t, kb, kbit, speedInSec;
-    int sec, minutes, hours, days, years;
+    double s, t, kb, kbit, speedInSec, ohs, ohsec;
+    int sec, minutes, hours, days, years, overhead;
     sscanf(argv[2], "%lf", &t);
     sscanf(argv[1], "%lf", &s);
-
+	if(argv[3] != 0)
+	{
+		sscanf(argv[3], "%i", &overhead);
+	}
+	
 
     //get size in kb
     kb = t * 1024 * 1024;
 
     //get speed in kbit
-    s = s / 8;
-    kbit = s * 1000;
+	if(argv[3] != 0)
+	{
+		ohs = s * overhead / 100;
+		ohs = s - ohs;
+		s = ohs / 8;
+	}
+	else
+	{
+		s = s / 8;
+	}
+	kbit = s * 1000;
     speedInSec = kb / kbit;
 
     //Do the calculation
@@ -131,7 +144,7 @@ int main (int argc, char *argv[])
 
 
 	#if defined(__APPLE__) || defined(__LINUX__)
-    cout << BOLDWHITE <<  "Size: " << RESET << t << transferFormat << BOLDWHITE << "Speed: " << RESET << s << " MB/s\n\n" << BOLDWHITE << "ETA: " << RESET;
+    cout << BOLDWHITE <<  "Size: " << RESET << t << transferFormat << BOLDWHITE << "Speed: " << RESET << s << " MB/s" << BOLDWHITE << "\nOverhead: "<< RESET <<  overhead << "%\n\n" << BOLDWHITE << "ETA: " << RESET;
     #endif
 	
 	#if defined(_WIN32)
