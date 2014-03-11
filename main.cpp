@@ -7,6 +7,7 @@
 
 using namespace std;
 
+#if defined(__APPLE__) || defined(__LINUX__)
 //Add color support works for linux and OSX but should not work on windows.
 #define RESET   "\033[0m"
 #define BLACK   "\033[30m"      /* Black */
@@ -25,6 +26,9 @@ using namespace std;
 #define BOLDMAGENTA "\033[1m\033[35m"      /* Bold Magenta */
 #define BOLDCYAN    "\033[1m\033[36m"      /* Bold Cyan */
 #define BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
+
+#endif
+
 
 void logo()
 {
