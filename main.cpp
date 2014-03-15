@@ -7,8 +7,8 @@
 
 using namespace std;
 
+// Color support for Linux and Apple.
 #if defined(__APPLE__) || defined(__LINUX__)
-//Add color support works for linux and OSX but should not work on windows.
 #define RESET   "\033[0m"
 #define BLACK   "\033[30m"      /* Black */
 #define RED     "\033[31m"      /* Red */
@@ -29,31 +29,40 @@ using namespace std;
 #endif
 
 
+// function to print the ascii logo because i dont wanna "re-create" it latere on!
 void logo()
 {
-    //Print application name  in ascii with the color of Cyan
+    	//enable colors for linux and apple
 	#if defined(__APPLE__) || defined(__LINUX__)
-    cout << BOLDCYAN;
+    		cout << BOLDCYAN;
 	#endif
-	
+
+    //print ascii file
     cout << " _____          _        _____  ___  " << endl;
     cout << "/__   \\___ __ _| | ___  |___ / / _ \\ " << endl;
     cout << "  / /\\/ __/ _` | |/ __|   |_ \\| | | |" << endl;
     cout << " / / | (_| (_| | | (__   ___) | |_| |" << endl;
     cout << " \\/   \\___\\__,_|_|\\___| |____(_)___/ " << endl;
 	cout << "====================================" << endl;
-
+	
+	//reset color to default for linux and apple
 	#if defined(__APPLE__) || defined(__LINUX__)
 	cout << RESET;
 	#endif
 
 }
+
+
+//function to print usage
 void usage(char *argv[], int argc)
 {
+    //print the logo
     logo();
-
+   
+    //if there is more parameters than "3"
     if(argc < 3)
-    {
+    {           
+                  
 		#if defined(__APPLE__) || defined(__LINUX__)
 			cout << BOLDRED;
  		#endif
@@ -101,6 +110,11 @@ int main (int argc, char *argv[])
     //get speed in kbit
 	if(argv[3] != 0)
 	{
+		if(overhead > 99)
+		{
+			overhead = 99;
+		}
+
 		ohs = s * overhead / 100;
 		ohs = s - ohs;
 		s = ohs / 8;
