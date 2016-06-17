@@ -142,7 +142,7 @@ int main (int argc, char *argv[])
 
 
     //set and get values from argv and convert if needed.
-    double s, t, kb, kbit, speedInSec, ohs, ohsec;
+    double s, t, kb, kbit, speedInSec, ohs;
     int sec, minutes, hours, days, years, overhead;
     sscanf(argv[2], "%lf", &t);
     sscanf(argv[1], "%lf", &s);
